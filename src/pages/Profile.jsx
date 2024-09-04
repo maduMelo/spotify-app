@@ -4,7 +4,11 @@ import { Button, Typography } from '@mui/material';
 
 import spotifyControllers from "../controllers/spotifyController";
 
+
+
+
 export default function Profile() {
+
     const accessToken = localStorage.getItem('access_token');
     const [data, setData] = React.useState(null);
 
@@ -19,3 +23,5 @@ export default function Profile() {
         </>
     );
 };
+
+// { data && <Navbar profilePic={data.images[0].url} />}
