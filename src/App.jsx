@@ -8,6 +8,8 @@ import CreatePlaylist from './pages/CreatePlaylist';
 import MyPlaylists from './pages/MyPlaylists';
 import Navbar from './components/Navbar';
 
+import { UserProvider } from './context/userContext';
+
 import './App.css'
 
 function App() {
@@ -15,17 +17,15 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Homepage />} />
-          <Route path='/callback' element={<Callback />}></Route>
-
-          <Route element={<Navbar />}>
-            <Route path='profile' element={<Profile />}></Route>
-            <Route path='create-playlist' element={<CreatePlaylist />}></Route>
-            <Route path='my-playlists' element={<MyPlaylists />}></Route>
-          </Route>
-          
-        </Routes>
+          <Routes>
+            <Route path="/" element={<Homepage />} />
+            <Route path='/callback' element={<Callback />}></Route>
+            <Route element={ <UserProvider><Navbar /></UserProvider> }>
+              <Route path='profile' element={<Profile />}></Route>
+              <Route path='create-playlist' element={<CreatePlaylist />}></Route>
+              <Route path='my-playlists' element={<MyPlaylists />}></Route>
+            </Route>
+          </Routes>
       </BrowserRouter>
     </>
   )

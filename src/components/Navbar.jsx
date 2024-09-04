@@ -15,6 +15,7 @@ import MenuItem from '@mui/material/MenuItem';
 import logo from '../assets/logo.png';
 
 import { useNavigate } from "react-router-dom";
+import { UserContext } from '../context/userContext';
 
 import { Outlet } from 'react-router-dom';
 
@@ -24,6 +25,9 @@ const settings = ['Logout'];
 
 function ResponsiveAppBar() {
   const navigate = useNavigate();
+  const { user } = React.useContext(UserContext);
+  console.log(user);
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -122,7 +126,7 @@ function ResponsiveAppBar() {
                     '&:hover': {bgcolor: 'rgba(255, 231, 231, 0.06)', transform: 'scale(1.05)'} 
                   }}
                 >
-                  <Avatar alt='' src='' />
+                  <Avatar alt={user && user.display_name} src={user && user.images[0].url} />
                 </IconButton>
               </Tooltip>
 
@@ -153,6 +157,7 @@ function ResponsiveAppBar() {
           </Toolbar>
         </Container>
       </AppBar>
+      
       <Outlet />
     </>
   );
