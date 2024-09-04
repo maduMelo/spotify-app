@@ -1,11 +1,11 @@
-
+import React from 'react';
 import { Typography } from '@mui/material';
-import Navbar from '../components/Navbar';
+import SearchTracks from '../components/SearchTracks';
 
 export default function CreatePlaylist() {
     return (
         <div>
-            <Typography variant='h3'>Create Playlist</Typography>
+            <SearchTracks />
         </div>
     )
 };

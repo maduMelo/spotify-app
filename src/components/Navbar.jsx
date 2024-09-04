@@ -118,7 +118,7 @@ function ResponsiveAppBar() {
             </Box>
 
             <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
+              <Tooltip title={user && user.display_name}>
                 <IconButton onClick={handleOpenUserMenu}
                   sx={{ 
                     p: 1, m: 1, bgcolor: 'rgba(255, 231, 231, 0.06)', transition: 'all 0.1s ease',
