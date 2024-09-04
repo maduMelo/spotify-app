@@ -26,7 +26,6 @@ const settings = ['Logout'];
 function ResponsiveAppBar() {
   const navigate = useNavigate();
   const { user } = React.useContext(UserContext);
-  console.log(user);
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
