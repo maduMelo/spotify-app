@@ -1,7 +1,8 @@
 import React from 'react';
 import { Box, Button, Container, IconButton, InputBase, List, ListItem, ListItemAvatar, ListItemText, Avatar, Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import MusicNoteIcon from '@mui/icons-material/MusicNote';
+
+import EditablePlaylist from './EditablePlaylist';
 
 export default function SearchTracks() {
   const songs = [
@@ -13,21 +14,7 @@ export default function SearchTracks() {
 
   return (
     <Container maxWidth="sm" sx={{ pt: 4 }}>
-
-      <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Box display="flex" alignItems="center">
-          <Avatar variant="square" sx={{ width: 180, height: 180, bgcolor: '#2d2d2d', borderRadius: 1.5 }}>
-            <MusicNoteIcon sx={{ fontSize: 80, color: '#787878' }} />
-          </Avatar>
-
-          <Box ml={2}>
-            <Typography variant="subtitle1">Public playlist</Typography>
-            <Typography variant="h4" fontWeight="bold">My playlist n° X</Typography>
-          </Box>
-        </Box>
-
-        <Button variant="contained" color="success" sx={{ textTransform: 'none' }}>Save</Button>
-      </Box>
+      <EditablePlaylist />
 
       <Box mt={4} display="flex" alignItems="center" sx={{ bgcolor: '#282828', borderRadius: '50px', p: 1 }}>
         <IconButton>
