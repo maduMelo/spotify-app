@@ -6,7 +6,7 @@ import spotifyControllers from "../controllers/spotifyController";
 
 import { UserContext } from '../context/userContext';
 
-import InfiniteScroll from '../components/InfiniteScroll';
+import InfiniteScrollPlaylist from '../components/InfiniteScrollPlaylist';
 
 
 export default function Profile() {
@@ -19,8 +19,7 @@ export default function Profile() {
 
     return (
         <>  
-            <Typography variant='h3'>Profile</Typography>
-            <InfiniteScroll />
+            <InfiniteScrollPlaylist />
         </>
     );
 };

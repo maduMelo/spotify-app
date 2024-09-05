@@ -28,6 +28,25 @@ const spotifyControllers = {
             setHasMore(false);
         };
     },
+
+    getTracksByQuery: async (accessToken, query, offset, limit, saveTracks, setHasMore) => {
+        const url = 'https://api.spotify.com/v1/search';
+
+        try {
+            const response = await spotifyServices.GETRequestWithParams(accessToken, url, { q: query, type: 'track', offset, limit });
+
+            const newTracks = response.tracks.items;
+            saveTracks(prevTracks => [...prevTracks, ...newTracks]);
+
+            if (newTracks.length < limit) setHasMore(false);
+
+            console.log(newTracks);
+        }
+        catch (error) {
+            console.error('Failed to request tracks by query', error);
+            setHasMore(false);
+        };
+    },
 };
 
 

@@ -1,11 +1,17 @@
 import React from 'react';
-import { Typography } from '@mui/material';
+import { Container } from '@mui/material';
+
 import SearchTracks from '../components/SearchTracks';
+import EditablePlaylist from '../components/EditablePlaylist';
 
 export default function CreatePlaylist() {
+    // Create the state to store the playlist
+    // Create the action to the save buttons
+
     return (
-        <div>
+        <Container maxWidth="sm" sx={{ pt: 4 }}>
+            <EditablePlaylist />
             <SearchTracks />
-        </div>
+        </Container>
     )
 };

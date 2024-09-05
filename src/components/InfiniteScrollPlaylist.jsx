@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import axios from 'axios';
-import { Typography, Card, CardContent, CardMedia } from '@mui/material';
+import { Typography, Card, CardContent, CardMedia, CircularProgress } from '@mui/material';
 
 import spotifyControllers from '../controllers/spotifyController';
 
@@ -29,7 +28,7 @@ const FeaturedPlaylists = () => {
             dataLength={playlists.length}
             next={loadMorePlaylists}
             hasMore={hasMore}
-            loader={<Typography variant="h6">Loading...</Typography>}
+            loader={<CircularProgress sx={{ p: 0, m: 2 }}/>}
             endMessage={<Typography variant="h6">No more playlists</Typography>}
         >
             <div>
