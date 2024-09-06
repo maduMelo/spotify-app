@@ -7,7 +7,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import spotifyControllers from '../controllers/spotifyController';
 
 
-export default function SearchTracks() {
+export default function SearchTracks({ setPlaylist }) {
   const accessToken = localStorage.getItem('access_token');
 
   const [query, setQuery] = React.useState(null);
@@ -29,10 +29,14 @@ export default function SearchTracks() {
     fetchTracks();
   };
 
+  const addTrackOnPlaylist = (event) => {
+    setPlaylist((prevPlaylist) => [...prevPlaylist, event.target.id]);
+  };
+
 
   return (
     <>
-      <Box mt={4} display="flex" alignItems="center" sx={{ bgcolor: '#282828', borderRadius: '50px', p: 1 }}>
+      <Box mt={4} display="flex" alignItems="center" maxWidth='sm' sx={{ bgcolor: '#282828', borderRadius: '50px', p: 1 }}>
         <IconButton onClick={handleSearch}>
           <SearchIcon sx={{ color: 'white' }} />
         </IconButton>
@@ -54,7 +58,7 @@ export default function SearchTracks() {
 
         <List sx={{ mt: 2 }}>
           {tracks.map((track, index) => (
-            <ListItem key={index} id={track.id}
+            <ListItem key={index}
               sx={{
                 bgcolor: '#181818', borderRadius: '8px', mb: 1,
                 '&:hover': { bgcolor: 'rgba(255, 231, 231, 0.06)' }
@@ -66,7 +70,8 @@ export default function SearchTracks() {
 
               <ListItemText primary={track.name} secondary={track.artists[0].name} />
 
-              <Button variant="outlined"
+              <Button variant="outlined" id={track.id}
+                onClick={addTrackOnPlaylist}
                 sx={{
                   textTransform: 'none', borderColor: 'white', color: 'white', borderRadius: '50px', pr: 5, pl: 5,
                   '&:hover': { bgcolor: 'rgba(255, 231, 231, 0.06)', transform: 'scale(1.05)' }

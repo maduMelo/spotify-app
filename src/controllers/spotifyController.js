@@ -11,6 +11,25 @@ const spotifyControllers = {
         catch (error) { console.error('Failed to request profile information', error) };
     },
 
+    createPlaylist: async (accessToken, userID, playlistConfig) => {
+        const url = `https://api.spotify.com/v1/users/${userID}/playlists`;
+
+        try {
+            const data = await spotifyServices.POSTRequest(accessToken, url, JSON.stringify(playlistConfig));
+            if (data) return data.id;
+        }
+        catch (error) { console.error('Failed to create playlist', error) };
+    },
+
+    addTracksOnPlaylist: async (accessToken, playlistID, tracksIDs) => {
+        const url = `https://api.spotify.com/v1/playlists/${playlistID}/tracks`;
+
+        try {
+            await spotifyServices.POSTRequest(accessToken, url, JSON.stringify({ uris: tracksIDs }));
+        }
+        catch (error) { console.error('Failed to add tracks', error) };
+    },
+
     getMyPlaylists: async (accessToken, userID, offset, limit, savePlaylists, setHasMore) => {
         const url = 'https://api.spotify.com/v1/me/playlists';
 

@@ -1,17 +1,44 @@
 import React from 'react';
-import { Container } from '@mui/material';
+import { Container, Button, Box } from '@mui/material';
+import { UserContext } from '../context/userContext';
+
+import spotifyControllers from '../controllers/spotifyController';
 
 import SearchTracks from '../components/SearchTracks';
 import EditablePlaylist from '../components/EditablePlaylist';
 
+
 export default function CreatePlaylist() {
-    // Create the state to store the playlist
-    // Create the action to the save buttons
+    const accessToken = localStorage.getItem('access_token');
+    const { user } = React.useContext(UserContext);
+    
+    const [playlist, setPlaylist] = React.useState([]);
+    const [body, setBody] = React.useState({
+        name: 'Testando 1..2..3..',
+        description: 'Playlist created by Playlist Maker',
+        public: true
+    });
+
+    const handleCreatePlaylist = async () => {
+        const playlistID = await spotifyControllers.createPlaylist(accessToken, user.id, body);
+        const tracksID = playlist.map(track => `spotify:track:${track}`);
+        await spotifyControllers.addTracksOnPlaylist(accessToken, playlistID, tracksID);
+    };
 
     return (
-        <Container maxWidth="sm" sx={{ pt: 4 }}>
-            <EditablePlaylist />
-            <SearchTracks />
+        <Container maxWidth="lg" sx={{ pt: 4 }}>
+
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '97%' }}>
+                <EditablePlaylist />
+
+                <Button variant="contained" onClick={handleCreatePlaylist}
+                    sx={{ textTransform: 'none', bgcolor: '#1FDF64', color: 'black' }}
+                >
+                    Save
+                </Button>
+            </Box>
+
+            <SearchTracks setPlaylist={setPlaylist} />
         </Container>
     )
 };

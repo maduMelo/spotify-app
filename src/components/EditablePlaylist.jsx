@@ -33,7 +33,7 @@ export default function EditablePlaylist() {
                     </Box>
                 </Box>
 
-                <Button variant="contained" color="success" sx={{ textTransform: 'none' }}>Save</Button>
+                
             </Box>
 
             <PlaylistDialog open={open} setOpen={setOpen} />
