@@ -1,12 +1,11 @@
 import React from 'react';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Box, Avatar } from '@mui/material';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
 
 import PlaylistDialog from './PlaylistDialog';
 
-export default function EditablePlaylist() {
+export default function EditablePlaylist({ playlistInfo, setPlaylistInfo }) {
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -24,19 +23,17 @@ export default function EditablePlaylist() {
                     </Avatar>
 
                     <Box ml={2}>
-                        <Typography variant="subtitle1">Public playlist</Typography>
+                        <Typography variant="subtitle1">{playlistInfo.public ? 'Public' : 'Private'} playlist</Typography>
                         <Typography variant="h4" fontWeight="bold" onClick={handleClickOpen}
                             sx={{ cursor: 'pointer' }}
                         >
-                            My playlist n° X
+                            {playlistInfo.name}
                         </Typography>
                     </Box>
                 </Box>
-
-                
             </Box>
 
-            <PlaylistDialog open={open} setOpen={setOpen} />
+            <PlaylistDialog open={open} setOpen={setOpen} playlistInfo={playlistInfo} setPlaylistInfo={setPlaylistInfo} />
         </>
     );
 };

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -12,9 +12,25 @@ import { Box, Avatar } from '@mui/material';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
 
 
-export default function PlaylistDialog({ open, setOpen }) {
+export default function PlaylistDialog({ open, setOpen, playlistInfo, setPlaylistInfo }) {
+    const [playlistUpdate, setPlaylistUpdate] = React.useState({
+        name: playlistInfo.name,
+        description: playlistInfo.description,
+        public: true
+    });
+
+    const handleInputChange = (event) => {
+        const { id, value } = event.target;
+        setPlaylistUpdate(prevPlaylistUpdate => ({...prevPlaylistUpdate, [id]: value}));
+    };
+
     const handleClose = () => {
         setOpen(false);
+    };
+    
+    const handleUpdate = () => {
+        setPlaylistInfo(playlistUpdate);
+        handleClose();
     };
 
     return (
@@ -48,13 +64,21 @@ export default function PlaylistDialog({ open, setOpen }) {
                     <MusicNoteIcon sx={{ fontSize: 80, color: '#787878' }} />
                 </Avatar>
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
-                    <TextField id="name" label="Name" variant="outlined" />
-                    <TextField id="description" label="Description" variant="outlined" multiline rows={4} />
+                    <TextField id="name" label="Name" variant="outlined"
+                        value={playlistUpdate.name}
+                        onChange={handleInputChange}
+                    />
+                    <TextField id="description" label="Description" variant="outlined"
+                        multiline rows={4}
+                        value={playlistUpdate.description}
+                        onChange={handleInputChange}
+                    />
                 </Box>
             </DialogContent>
 
             <DialogActions sx={{ bgcolor: '#2d2d2d' }}>
-                <Button autoFocus variant='contained' onClick={handleClose}>
+                <Button autoFocus variant='contained' sx={{ bgcolor: 'white', color: 'black' }}
+                    onClick={handleUpdate}>
                     Save
                 </Button>
             </DialogActions>

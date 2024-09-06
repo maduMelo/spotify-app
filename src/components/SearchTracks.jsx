@@ -35,11 +35,10 @@ export default function SearchTracks({ setPlaylist }) {
   const handleCloseSnackbar = (event, reason) => {reason === 'clickaway' ? null : setOpenSnackbar(false)};
 
   const addTrackOnPlaylist = (event) => {
-    const [trackName, trackID] = event.target.id.split('-');
-    setPlaylist((prevPlaylist) => [...prevPlaylist, trackID]);
+    setPlaylist((prevPlaylist) => [...prevPlaylist, event.target.id]);
 
     setOpenSnackbar(true);
-    setSnackbarMessage(`${trackName} added to playlist`);
+    setSnackbarMessage(`${event.target.name} added to playlist`);
   };
 
 
@@ -79,7 +78,7 @@ export default function SearchTracks({ setPlaylist }) {
 
               <ListItemText primary={track.name} secondary={track.artists[0].name} />
 
-              <Button variant="outlined" id={`${track.name}-${track.id}`}
+              <Button variant="outlined" id={track.id} name={track.name}
                 onClick={addTrackOnPlaylist}
                 sx={{
                   textTransform: 'none', borderColor: 'white', color: 'white', borderRadius: '50px', width: '120px',
