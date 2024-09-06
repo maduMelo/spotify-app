@@ -29,7 +29,7 @@ const authControllers = {
         const CLIENT_ID = import.meta.env.VITE_CLIENT_ID;
         const REDIRECT_URI = import.meta.env.VITE_REDIRECT_URI;
 
-        const scope = 'user-read-private user-read-email user-follow-read user-top-read playlist-modify-public';
+        const scope = 'user-read-private user-read-email user-follow-read user-top-read playlist-modify-public playlist-read-private playlist-read-collaborative';
         const authUrl = new URL('https://accounts.spotify.com/authorize');
 
         window.localStorage.setItem('code_verifier', codeVerifier);

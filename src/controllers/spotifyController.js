@@ -11,17 +11,17 @@ const spotifyControllers = {
         catch (error) { console.error('Failed to request profile information', error) };
     },
 
-    getFeaturedPlaylists: async (accessToken, offset, limit, playlists, savePlaylists, setHasMore) => {
-        const url = 'https://api.spotify.com/v1/browse/featured-playlists';
+    getMyPlaylists: async (accessToken, userID, offset, limit, savePlaylists, setHasMore) => {
+        const url = 'https://api.spotify.com/v1/me/playlists';
 
         try {
-            const response = await spotifyServices.GETRequestWithParams(accessToken, url, { offset, limit });
+            const response = await spotifyServices.GETRequestWithParams(accessToken, url, { userID, offset, limit });
             
-            const { items, total } = response.playlists;
-            console.log(items);
-            savePlaylists(prevPlaylists => [...prevPlaylists, ...items]);
+            const newPlaylists = response.items;
+            savePlaylists(prevPlaylists => [...prevPlaylists, ...newPlaylists]);
 
-            if (playlists.length >= total) setHasMore(false);
+            if (newPlaylists.length < limit) setHasMore(false);
+
         }
         catch (error) {
             console.error('Failed to request featured playlists', error);
@@ -39,8 +39,6 @@ const spotifyControllers = {
             saveTracks(prevTracks => [...prevTracks, ...newTracks]);
 
             if (newTracks.length < limit) setHasMore(false);
-
-            console.log(newTracks);
         }
         catch (error) {
             console.error('Failed to request tracks by query', error);

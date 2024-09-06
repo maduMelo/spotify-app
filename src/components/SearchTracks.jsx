@@ -14,7 +14,7 @@ export default function SearchTracks() {
   const [tracks, setTracks] = React.useState([]);
   const [hasMore, setHasMore] = React.useState(false);
   const [offset, setOffset] = React.useState(0);
-  const limit = 10;
+  const limit = 5;
 
   const fetchTracks = async () => {
     if (!query) return;

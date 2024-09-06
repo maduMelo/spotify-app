@@ -3,24 +3,30 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { Typography, Card, CardContent, CardMedia, CircularProgress } from '@mui/material';
 
 import spotifyControllers from '../controllers/spotifyController';
+import { UserContext } from '../context/userContext';
 
 const FeaturedPlaylists = () => {
     const accessToken = localStorage.getItem('access_token');
+    const { user } = React.useContext(UserContext);
+
     const [playlists, setPlaylists] = useState([]);
     const [hasMore, setHasMore] = useState(true);
-    const [offset, setOffset] = useState(0);
+    const [offset, setOffset] = useState(3);
     const limit = 3;
 
     const fetchPlaylists = async () => {
-        spotifyControllers.getFeaturedPlaylists(accessToken, offset, limit, playlists, setPlaylists, setHasMore);
+        if (user) {
+            spotifyControllers.getMyPlaylists(accessToken, user.id, offset, limit, setPlaylists, setHasMore);
+        };
+        
     };
 
     useEffect(() => {
         fetchPlaylists();
-    }, [offset]);
+    }, [offset, user]);
 
     const loadMorePlaylists = () => {
-        setOffset(prevOffset => prevOffset + limit);
+        if (hasMore) setOffset(prevOffset => prevOffset + limit);
     };
 
     return (
@@ -37,7 +43,7 @@ const FeaturedPlaylists = () => {
                         <CardMedia
                             component="img"
                             height="140"
-                            image={playlist.images[0]?.url}
+                            image={playlist.images? playlist.images[0].url : 'https://cdn-icons-png.freepik.com/512/7919/7919609.png'}
                             alt={playlist.name}
                         />
                         <CardContent>
