@@ -1,7 +1,7 @@
 import React from 'react';
-import { Box, Button, Container, IconButton, InputBase, List, ListItem, ListItemAvatar, ListItemText, Avatar, Typography } from '@mui/material';
+import { Box, Button, IconButton, InputBase, List, ListItem, ListItemAvatar, ListItemText, Avatar } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import { TextField, CircularProgress } from '@mui/material';
+import { CircularProgress, Snackbar } from '@mui/material';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 import spotifyControllers from '../controllers/spotifyController';
@@ -10,16 +10,19 @@ import spotifyControllers from '../controllers/spotifyController';
 export default function SearchTracks({ setPlaylist }) {
   const accessToken = localStorage.getItem('access_token');
 
-  const [query, setQuery] = React.useState(null);
+  const [query, setQuery] = React.useState('');
   const [tracks, setTracks] = React.useState([]);
   const [hasMore, setHasMore] = React.useState(false);
   const [offset, setOffset] = React.useState(0);
   const limit = 5;
 
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+  const [snackbarMessage, setSnackbarMessage] = React.useState('');
+
   const fetchTracks = async () => {
     if (!query) return;
     await spotifyControllers.getTracksByQuery(accessToken, query, offset, limit, setTracks, setHasMore);
-    setOffset((prevOffset) => prevOffset + limit); // Incrementa o offset para a próxima busca
+    setOffset((prevOffset) => prevOffset + limit);
   };
 
   const handleSearch = () => {
@@ -29,8 +32,14 @@ export default function SearchTracks({ setPlaylist }) {
     fetchTracks();
   };
 
+  const handleCloseSnackbar = (event, reason) => {reason === 'clickaway' ? null : setOpenSnackbar(false)};
+
   const addTrackOnPlaylist = (event) => {
-    setPlaylist((prevPlaylist) => [...prevPlaylist, event.target.id]);
+    const [trackName, trackID] = event.target.id.split('-');
+    setPlaylist((prevPlaylist) => [...prevPlaylist, trackID]);
+
+    setOpenSnackbar(true);
+    setSnackbarMessage(`${trackName} added to playlist`);
   };
 
 
@@ -70,10 +79,10 @@ export default function SearchTracks({ setPlaylist }) {
 
               <ListItemText primary={track.name} secondary={track.artists[0].name} />
 
-              <Button variant="outlined" id={track.id}
+              <Button variant="outlined" id={`${track.name}-${track.id}`}
                 onClick={addTrackOnPlaylist}
                 sx={{
-                  textTransform: 'none', borderColor: 'white', color: 'white', borderRadius: '50px', pr: 5, pl: 5,
+                  textTransform: 'none', borderColor: 'white', color: 'white', borderRadius: '50px', width: '120px',
                   '&:hover': { bgcolor: 'rgba(255, 231, 231, 0.06)', transform: 'scale(1.05)' }
                 }}
               >
@@ -82,8 +91,14 @@ export default function SearchTracks({ setPlaylist }) {
             </ListItem>
           ))}
         </List>
-
       </InfiniteScroll>
+
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={1000}
+        onClose={handleCloseSnackbar}
+        message={snackbarMessage}
+      />
     </>
   );
 };

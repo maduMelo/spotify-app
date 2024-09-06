@@ -31,7 +31,7 @@ export default function CreatePlaylist() {
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '97%' }}>
                 <EditablePlaylist />
 
-                <Button variant="contained" onClick={handleCreatePlaylist}
+                <Button variant="contained" onClick={ () => console.log(playlist) }
                     sx={{ textTransform: 'none', bgcolor: '#1FDF64', color: 'black' }}
                 >
                     Save
