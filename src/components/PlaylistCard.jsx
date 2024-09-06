@@ -34,7 +34,7 @@ export default function PlaylistCard({ playlist, index }) {
                             WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', display: '-webkit-box'
                         }}
                     >
-                        {playlist.description}
+                        {playlist.description.substring(0, 7) !== '<a href' ? playlist.description : ''}
                     </Typography>
                 </CardContent>
             </CardActionArea>
