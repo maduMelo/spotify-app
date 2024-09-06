@@ -93,6 +93,7 @@ export default function SearchTracks({ setPlaylist }) {
       </InfiniteScroll>
 
       <Snackbar
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
         open={openSnackbar}
         autoHideDuration={1000}
         onClose={handleCloseSnackbar}

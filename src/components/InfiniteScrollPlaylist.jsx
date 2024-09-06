@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { Typography, Card, CardContent, CardMedia, CircularProgress } from '@mui/material';
+import { Typography, CircularProgress } from '@mui/material';
+import { Box } from '@mui/material';
+import Grid from '@mui/material/Grid2';
 
 import spotifyControllers from '../controllers/spotifyController';
 import { UserContext } from '../context/userContext';
+import PlaylistCard from './PlaylistCard';
 
 const FeaturedPlaylists = () => {
     const accessToken = localStorage.getItem('access_token');
@@ -12,7 +15,7 @@ const FeaturedPlaylists = () => {
     const [playlists, setPlaylists] = useState([]);
     const [hasMore, setHasMore] = useState(true);
     const [offset, setOffset] = useState(3);
-    const limit = 3;
+    const limit = 8;
 
     const fetchPlaylists = async () => {
         if (user) {
@@ -34,29 +37,20 @@ const FeaturedPlaylists = () => {
             dataLength={playlists.length}
             next={loadMorePlaylists}
             hasMore={hasMore}
-            loader={<CircularProgress sx={{ p: 0, m: 2 }}/>}
+            loader={<CircularProgress sx={{ p: 0, m: 2, color: '#1FDF64' }}/>}
             endMessage={<Typography variant="h6">No more playlists</Typography>}
         >
-            <div>
-                {playlists.slice(2).map((playlist, index) => (
-                    <Card key={index} sx={{ maxWidth: 345, mb: 2 }}>
-                        <CardMedia
-                            component="img"
-                            height="140"
-                            image={playlist.images? playlist.images[0].url : 'https://cdn-icons-png.freepik.com/512/7919/7919609.png'}
-                            alt={playlist.name}
-                        />
-                        <CardContent>
-                            <Typography gutterBottom variant="h5" component="div">
-                                {playlist.name}
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary">
-                                {playlist.description}
-                            </Typography>
-                        </CardContent>
-                    </Card>
-                ))}
-            </div>
+            <Box sx={{ display: 'center', alignItems: 'center', justifyContent: 'center' }} m={4}>
+                <Box maxWidth='lg' sx={{ flexGrow: 1 }}>
+                    <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 12, md: 20 }}>
+                        {playlists.slice(8).map((playlist, index) => (
+                            <Grid key={index} size={{ xs: 2, sm: 4, md: 5 }} >
+                                <PlaylistCard playlist={playlist} index={index} />
+                            </Grid>
+                        ))}
+                    </Grid>
+                </Box>
+            </Box>
         </InfiniteScroll>
     );
 };

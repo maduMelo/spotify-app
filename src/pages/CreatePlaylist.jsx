@@ -14,7 +14,7 @@ export default function CreatePlaylist() {
     
     const [playlist, setPlaylist] = React.useState([]);
     const [body, setBody] = React.useState({
-        name: 'Testando 1..2..3..',
+        name: 'My Playlist',
         description: 'Playlist created by Playlist Maker',
         public: true
     });
