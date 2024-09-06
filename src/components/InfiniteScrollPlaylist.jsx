@@ -38,7 +38,7 @@ const FeaturedPlaylists = () => {
             endMessage={<Typography variant="h6">No more playlists</Typography>}
         >
             <div>
-                {playlists.map((playlist, index) => (
+                {playlists.slice(2).map((playlist, index) => (
                     <Card key={index} sx={{ maxWidth: 345, mb: 2 }}>
                         <CardMedia
                             component="img"
