@@ -49,8 +49,17 @@ export default function PlaylistDialog({ open, setOpen, playlistInfo, setPlaylis
         <Dialog
             onClose={handleClose}
             open={open}
+            PaperProps={{
+                sx: {
+                    borderRadius: 3,
+                    bgcolor: '#2d2d2d',
+                    color: 'white',
+                    width: 600,
+                    maxWidth: '80%',
+                },
+            }}
         >
-            <DialogTitle sx={{ m: 0, p: 2, bgcolor: '#2d2d2d', color: 'white' }} id="customized-dialog-title">
+            <DialogTitle sx={{ m: 0, p: 2, bgcolor: '#2d2d2d', color: 'white', borderRadius: 3 }} id="customized-dialog-title">
                 Edit details
             </DialogTitle>
 
@@ -68,14 +77,17 @@ export default function PlaylistDialog({ open, setOpen, playlistInfo, setPlaylis
             </IconButton>
 
             <DialogContent
-                sx={{ bgcolor: '#2d2d2d', display: 'flex', gap: 2, alignItems: 'center', p: 4 }}
+                sx={{ 
+                    bgcolor: '#2d2d2d', display: 'flex', gap: 2, alignItems: 'center',
+                    p: 1, marginInline: 2
+                }}
             >
                 <Avatar variant="square"
                     sx={{ width: 195, height: 195, bgcolor: '#454545', borderRadius: 1.5 }}
                 >
                     <MusicNoteIcon sx={{ fontSize: 80, color: '#787878' }} />
                 </Avatar>
-                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5, width: 340 }}>
                     <TextField id="name" label="Name" variant="outlined"
                         value={playlistUpdate.name}
                         onChange={handleInputChange}
@@ -88,8 +100,14 @@ export default function PlaylistDialog({ open, setOpen, playlistInfo, setPlaylis
                 </Box>
             </DialogContent>
 
-            <DialogActions sx={{ bgcolor: '#2d2d2d' }}>
-                <Button autoFocus variant='contained' sx={{ bgcolor: 'white', color: 'black' }}
+            <DialogActions sx={{ bgcolor: '#2d2d2d', borderRadius: 3 }}>
+                <Button autoFocus variant='contained' 
+                    sx={{ 
+                        textTransform: 'none', bgcolor: 'white', color: 'black', fontWeight: 'bold',
+                        padding: '10px 35px', borderRadius: '50px', fontSize: '1rem',
+                        marginRight: 2, marginBottom: 2,
+                        '&:hover': { transform: 'scale(1.03)', transition: '0.1s' }
+                    }}
                     onClick={handleUpdate}>
                     Save
                 </Button>

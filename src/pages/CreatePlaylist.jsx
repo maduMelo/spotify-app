@@ -32,13 +32,17 @@ export default function CreatePlaylist() {
     return (
         <Container maxWidth="lg" sx={{ pt: 4 }}>
 
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '97%' }}>
+            <Box sx={{ display: 'flex', alignItems: 'start', justifyContent: 'space-between', width: '97%' }}>
                 <EditablePlaylist playlistInfo={body} setPlaylistInfo={setBody} />
 
                 <Button variant="contained" onClick={handleCreatePlaylist}
-                    sx={{ textTransform: 'none', bgcolor: '#1FDF64', color: 'black' }}
+                    sx={{ 
+                        textTransform: 'none', bgcolor: '#1FDF64', color: 'black', fontWeight: 'bold',
+                        padding: '10px 35px', borderRadius: '50px', fontSize: '1rem',
+                        '&:hover': { transform: 'scale(1.03)', transition: '0.1s' }
+                    }}
                 >
-                    Save
+                    Create Playlist
                 </Button>
             </Box>
 
