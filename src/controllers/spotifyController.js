@@ -5,7 +5,7 @@ const spotifyControllers = {
         const url = 'https://api.spotify.com/v1/me';
 
         try {
-            const data = await spotifyServices.GETRequest(accessToken, url);
+            const data = await spotifyServices.GETRequest(accessToken, url, {});
             if (data) saveProfileInfo(data);
         }
         catch (error) { console.error('Failed to request profile information', error) };
@@ -52,7 +52,7 @@ const spotifyControllers = {
         const url = 'https://api.spotify.com/v1/me/playlists';
 
         try {
-            const response = await spotifyServices.GETRequestWithParams(accessToken, url, { userID, offset, limit });
+            const response = await spotifyServices.GETRequest(accessToken, url, { userID, offset, limit });
             
             const newPlaylists = response.items;
             savePlaylists(prevPlaylists => [...prevPlaylists, ...newPlaylists]);
@@ -70,7 +70,7 @@ const spotifyControllers = {
         const url = 'https://api.spotify.com/v1/search';
 
         try {
-            const response = await spotifyServices.GETRequestWithParams(accessToken, url, { q: query, type: 'track', offset, limit });
+            const response = await spotifyServices.GETRequest(accessToken, url, { q: query, type: 'track', offset, limit });
 
             const newTracks = response.tracks.items;
             saveTracks(prevTracks => [...prevTracks, ...newTracks]);
