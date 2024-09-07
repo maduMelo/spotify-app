@@ -2,11 +2,17 @@ import React from 'react';
 import { Card, CardContent, CardMedia, Typography } from '@mui/material';
 import CardActionArea from '@mui/material/CardActionArea';
 
-import { Menu, MenuItem, ListItemIcon } from '@mui/material';
+import { Menu, MenuItem, ListItemIcon, Divider } from '@mui/material';
 import PersonAdd from '@mui/icons-material/EditOutlined';
 import Settings from '@mui/icons-material/DoNotDisturbOnOutlined';
+import Lock from '@mui/icons-material/LockOutlined';
+import Cancel from '@mui/icons-material/AccountCircleOutlined';
+
+import { UserContext } from '../context/userContext';
 
 export default function PlaylistCard({ playlist, index }) {
+    const { user } = React.useContext(UserContext);
+
     const [menuPosition, setMenuPosition] = React.useState({ x: 0, y: 0 });
     const [open, setOpen] = React.useState(false);
 
@@ -17,6 +23,8 @@ export default function PlaylistCard({ playlist, index }) {
     };
 
     const handleClose = () => { setOpen(false) };
+
+    const handleEdit = () => { console.log(playlist, user) };
 
     return (
         <>
@@ -66,16 +74,34 @@ export default function PlaylistCard({ playlist, index }) {
             >
                 <MenuItem onClick={handleClose}>
                     <ListItemIcon sx={{ color: '#EBEBEB' }}>
-                        <PersonAdd fontSize="small" />
+                        <Cancel fontSize="small" />
                     </ListItemIcon>
-                    Edit details
+                    Remove from your profile
                 </MenuItem>
-                <MenuItem onClick={handleClose}>
-                    <ListItemIcon sx={{ color: '#EBEBEB' }}>
-                        <Settings fontSize="small" />
-                    </ListItemIcon>
-                    Delete
-                </MenuItem>
+                
+                {
+                    user.id === playlist.owner.id && 
+                    <>
+                        <Divider />
+
+                        <MenuItem onClick={handleEdit}>
+                            <ListItemIcon sx={{ color: '#EBEBEB' }}>
+                                <PersonAdd fontSize="small" />
+                            </ListItemIcon>
+                            Edit details
+                        </MenuItem>
+
+                        <Divider />
+                        
+                        <MenuItem onClick={handleClose}>
+                            <ListItemIcon sx={{ color: '#EBEBEB' }}>
+                                <Lock fontSize="small" />
+                            </ListItemIcon>
+                            Make private
+                        </MenuItem>
+                    </>
+                }
+                
             </Menu>
         </>
     );
