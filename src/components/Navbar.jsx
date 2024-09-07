@@ -20,7 +20,7 @@ import { UserContext } from '../context/userContext';
 import { Outlet } from 'react-router-dom';
 
 
-const pages = ['Create Playlist', 'My Playlists'];
+const pages = ['Create Playlist'];
 const settings = ['Logout'];
 
 function ResponsiveAppBar() {

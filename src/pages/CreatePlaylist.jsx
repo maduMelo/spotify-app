@@ -38,7 +38,7 @@ export default function CreatePlaylist() {
                 <Button variant="contained" onClick={handleCreatePlaylist}
                     sx={{ 
                         textTransform: 'none', bgcolor: '#1FDF64', color: 'black', fontWeight: 'bold',
-                        padding: '10px 35px', borderRadius: '50px', fontSize: '1rem',
+                        padding: '10px 35px', borderRadius: '50px', fontSize: 15,
                         '&:hover': { transform: 'scale(1.03)', transition: '0.1s' }
                     }}
                 >

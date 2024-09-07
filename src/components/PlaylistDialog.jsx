@@ -104,7 +104,7 @@ export default function PlaylistDialog({ open, setOpen, playlistInfo, setPlaylis
                 <Button autoFocus variant='contained' 
                     sx={{ 
                         textTransform: 'none', bgcolor: 'white', color: 'black', fontWeight: 'bold',
-                        padding: '10px 35px', borderRadius: '50px', fontSize: '1rem',
+                        padding: '10px 35px', borderRadius: '50px', fontSize: 14,
                         marginRight: 2, marginBottom: 2,
                         '&:hover': { transform: 'scale(1.03)', transition: '0.1s' }
                     }}
