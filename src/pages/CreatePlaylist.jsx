@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Button, Box } from '@mui/material';
 import { UserContext } from '../context/userContext';
+import { useNavigate } from 'react-router-dom';
 
 import spotifyControllers from '../controllers/spotifyController';
 
@@ -9,6 +10,7 @@ import EditablePlaylist from '../components/EditablePlaylist';
 
 
 export default function CreatePlaylist() {
+    const navigate = useNavigate();
     const accessToken = localStorage.getItem('access_token');
     const { user } = React.useContext(UserContext);
     
@@ -23,6 +25,8 @@ export default function CreatePlaylist() {
         const playlistID = await spotifyControllers.createPlaylist(accessToken, user.id, body);
         const tracksID = playlist.map(track => `spotify:track:${track}`);
         await spotifyControllers.addTracksOnPlaylist(accessToken, playlistID, tracksID);
+
+        navigate('/finished-playlist', { state: {...body, id: playlistID, owner: { id: user.id }} });
     };
 
     return (
@@ -31,7 +35,7 @@ export default function CreatePlaylist() {
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '97%' }}>
                 <EditablePlaylist playlistInfo={body} setPlaylistInfo={setBody} />
 
-                <Button variant="contained" onClick={ /*() => console.log(playlist)*/ handleCreatePlaylist }
+                <Button variant="contained" onClick={handleCreatePlaylist}
                     sx={{ textTransform: 'none', bgcolor: '#1FDF64', color: 'black' }}
                 >
                     Save

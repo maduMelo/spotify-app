@@ -50,8 +50,6 @@ const spotifyServices = {
             }
         });
 
-        console.log('DEBUG service', response);
-
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         return;
     }

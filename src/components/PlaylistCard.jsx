@@ -32,7 +32,7 @@ export default function PlaylistCard({ playlist, index }) {
 
     const handleUnfollowPlaylist = async () => {
         await spotifyControllers.unfollowPlaylist(accessToken, playlist.id);
-        // snabar avisando que apagou
+        // snackbar avisando que apagou
     };
 
 
@@ -50,7 +50,7 @@ export default function PlaylistCard({ playlist, index }) {
                         component="img"
                         height="220"
                         sx={{ borderRadius: '8px', objectFit: 'fill' }}
-                        image={playlist.images ? playlist.images[0].url : 'https://cdn-icons-png.freepik.com/512/7919/7919609.png'}
+                        image={playlist.images ? playlist.images[0].url : 'https://img.freepik.com/fotos-premium/fundo-de-design-de-gradiente-quadrado-azul_7954-31444.jpg'}
                         alt={playlist.name}
                     />
 
