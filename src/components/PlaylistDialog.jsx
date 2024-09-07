@@ -11,6 +11,8 @@ import TextField from '@mui/material/TextField';
 import { Box, Avatar } from '@mui/material';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
 
+import spotifyControllers from '../controllers/spotifyController';
+
 
 export default function PlaylistDialog({ open, setOpen, playlistInfo, setPlaylistInfo }) {
     const [playlistUpdate, setPlaylistUpdate] = React.useState({
@@ -28,9 +30,19 @@ export default function PlaylistDialog({ open, setOpen, playlistInfo, setPlaylis
         setOpen(false);
     };
     
-    const handleUpdate = () => {
-        setPlaylistInfo(playlistUpdate);
-        handleClose();
+    const handleUpdate = async () => {
+        if (setPlaylistInfo) {
+            setPlaylistInfo(playlistUpdate);
+            handleClose();
+        }
+        else {
+            const accessToken = localStorage.getItem('access_token');
+            await spotifyControllers.updatePlaylistInfo(accessToken, playlistInfo.id, playlistUpdate);
+
+            playlistInfo.name = playlistUpdate.name;
+            playlistInfo.description = playlistUpdate.description;
+            handleClose();
+        };
     };
 
     return (

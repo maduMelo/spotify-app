@@ -30,6 +30,15 @@ const spotifyControllers = {
         catch (error) { console.error('Failed to add tracks', error) };
     },
 
+    updatePlaylistInfo: async (accessToken, playlistID, playlistConfig) => {
+        const url = `https://api.spotify.com/v1/playlists/${playlistID}`;
+
+        try {
+            await spotifyServices.PUTRequest(accessToken, url, JSON.stringify(playlistConfig));
+        }
+        catch (error) { console.error('Failed to update playlist information', error) };
+    },
+
     getMyPlaylists: async (accessToken, userID, offset, limit, savePlaylists, setHasMore) => {
         const url = 'https://api.spotify.com/v1/me/playlists';
 

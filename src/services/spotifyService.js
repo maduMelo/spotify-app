@@ -1,6 +1,7 @@
 const spotifyServices = {
     GETRequest: async (accessToken, url) => {
         const response = await fetch(url, {
+            method: 'GET',
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }
@@ -15,6 +16,7 @@ const spotifyServices = {
         Object.keys(params).forEach(key => urlWithParams.searchParams.append(key, params[key]));
 
         const response = await fetch(urlWithParams, {
+            method: 'GET',
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }
@@ -37,6 +39,33 @@ const spotifyServices = {
         const data = await response.json();
         return data;
     },
+
+    PUTRequest: async (accessToken, url, body) => {
+        const response = await fetch(url, {
+            method: 'PUT',
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+                'Content-Type': 'application/json'
+            },
+            body
+        });
+        console.log('DEBUG service', response);
+        
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        return;
+    },
+
+    DELETERequest: async (accessToken, url) => {
+        const response = await fetch(url, {
+            method: 'DELETE',
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        });
+
+        const data = await response.json();
+        return data;
+    }
 };
 
 
