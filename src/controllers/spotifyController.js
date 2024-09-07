@@ -39,6 +39,15 @@ const spotifyControllers = {
         catch (error) { console.error('Failed to update playlist information', error) };
     },
 
+    unfollowPlaylist: async (accessToken, playlistID) => {
+        const url = `https://api.spotify.com/v1/playlists/${playlistID}/followers`;
+
+        try {
+            await spotifyServices.DELETERequest(accessToken, url);
+        }
+        catch (error) { console.error('Failed to unfollow playlist', error) };
+    },
+
     getMyPlaylists: async (accessToken, userID, offset, limit, savePlaylists, setHasMore) => {
         const url = 'https://api.spotify.com/v1/me/playlists';
 

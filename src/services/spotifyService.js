@@ -49,7 +49,6 @@ const spotifyServices = {
             },
             body
         });
-        console.log('DEBUG service', response);
         
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         return;
@@ -63,8 +62,10 @@ const spotifyServices = {
             }
         });
 
-        const data = await response.json();
-        return data;
+        console.log('DEBUG service', response);
+
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        return;
     }
 };
 

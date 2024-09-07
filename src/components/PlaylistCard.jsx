@@ -1,16 +1,15 @@
 import React from 'react';
-import { Card, CardContent, CardMedia, Typography } from '@mui/material';
-import CardActionArea from '@mui/material/CardActionArea';
+import { Card, CardContent, CardMedia, Typography, CardActionArea } from '@mui/material';
 
-import { Menu, MenuItem, ListItemIcon, Divider } from '@mui/material';
-import PersonAdd from '@mui/icons-material/EditOutlined';
-import Lock from '@mui/icons-material/LockOutlined';
-import Cancel from '@mui/icons-material/AccountCircleOutlined';
+import { Menu, MenuItem, ListItemIcon } from '@mui/material';
+import Edit from '@mui/icons-material/EditOutlined';
+import Check from '@mui/icons-material/CheckCircle';
 
 import { UserContext } from '../context/userContext';
 import spotifyControllers from '../controllers/spotifyController';
 
 import PlaylistDialog from './PlaylistDialog';
+
 
 export default function PlaylistCard({ playlist, index }) {
     const { user } = React.useContext(UserContext);
@@ -20,7 +19,6 @@ export default function PlaylistCard({ playlist, index }) {
     const [openMenu, setOpenMenu] = React.useState(false);
 
     const [openDialog, setOpenDialog] = React.useState(false);
-    const [key, setKey] = React.useState(0);
 
     const handleClick = (event) => {
         event.preventDefault();
@@ -30,7 +28,12 @@ export default function PlaylistCard({ playlist, index }) {
 
     const handleClose = () => { setOpenMenu(false) };
 
-    const handleEdit = () => { setOpenDialog(true) }; // Working
+    const handleEdit = () => { setOpenDialog(true) };
+
+    const handleUnfollowPlaylist = async () => {
+        await spotifyControllers.unfollowPlaylist(accessToken, playlist.id);
+        // snabar avisando que apagou
+    };
 
 
     return (
@@ -78,28 +81,25 @@ export default function PlaylistCard({ playlist, index }) {
                     overflow: 'visible', filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))', mt: 1.5, width: 300,
                     bgcolor: '#414141', color: '#EBEBEB'
                 }}}}
-            >
-                <MenuItem onClick={handleClose}>
-                    <ListItemIcon sx={{ color: '#EBEBEB' }}>
-                        <Cancel fontSize="small" />
-                    </ListItemIcon>
-                    Remove from your library
-                </MenuItem>
-                
+            >   
                 {
-                    user.id === playlist.owner.id && 
-                    <>
-                        <Divider />
-
-                        <MenuItem onClick={handleEdit}>
-                            <ListItemIcon sx={{ color: '#EBEBEB' }}>
-                                <PersonAdd fontSize="small" />
-                            </ListItemIcon>
-                            Edit details
-                        </MenuItem>
-                    </>
+                    user.id === playlist.owner.id ?
+                    <MenuItem onClick={handleEdit}>
+                        <ListItemIcon sx={{ color: '#EBEBEB' }}>
+                            <Edit fontSize="small" />
+                        </ListItemIcon>
+                        Edit details
+                    </MenuItem> :
+                    
+                    <MenuItem onClick={handleUnfollowPlaylist}>
+                        <ListItemIcon sx={{ color: '#1FDF64' }}>
+                            <Check fontSize="small" />
+                        </ListItemIcon>
+                        Remove from your library
+                    </MenuItem>
                 }
             </Menu>
+
             <PlaylistDialog open={openDialog} setOpen={setOpenDialog} playlistInfo={playlist} setPlaylistInfo={null} />
         </>
     );
