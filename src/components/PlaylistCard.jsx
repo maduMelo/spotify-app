@@ -45,7 +45,7 @@ export default function PlaylistCard({ playlist, index }) {
                     '&:hover': { bgcolor: "rgba(255, 231, 231, 0.06)"}
                 }}
             >
-                <CardActionArea onContextMenu={handleClick} onClick={() => console.log(playlist)}>
+                <CardActionArea onContextMenu={handleClick} >
                     <CardMedia
                         component="img"
                         height="220"
