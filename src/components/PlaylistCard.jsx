@@ -5,6 +5,7 @@ import Edit from '@mui/icons-material/EditOutlined';
 import Check from '@mui/icons-material/CheckCircle';
 
 import PlaylistDialog from './PlaylistDialog';
+import AlertComponent from './AlertComponent';
 
 import { UserContext } from '../context/userContext';
 import spotifyControllers from '../controllers/spotifyController';
@@ -19,6 +20,10 @@ export default function PlaylistCard({ playlist, index }) {
 
   const [openDialog, setOpenDialog] = React.useState(false);
 
+  const [showAlert, setShowAlert] = React.useState(false);
+  const [message, setMessage] = React.useState('');
+  const [severity, setSeverity] = React.useState('');
+
   const handleClick = (event) => {
     event.preventDefault();
     setMenuPosition({ x: event.clientX, y: event.clientY });
@@ -29,15 +34,29 @@ export default function PlaylistCard({ playlist, index }) {
   const handleEdit = () => { setOpenDialog(true) };
 
   const handleUnfollowPlaylist = async () => {
-    await spotifyControllers.unfollowPlaylist(accessToken, playlist.id);
-    // snackbar avisando que apagou
+    const status = await spotifyControllers.unfollowPlaylist(accessToken, playlist.id);
+
+    if (status) {
+      setMessage('Playlist removed from your library, reload the page to see changes.');
+      setSeverity('success');
+    }
+    else {
+      setMessage('Failed to remove playlist from your library.');
+      setSeverity('error');
+    };
+
+    setShowAlert(true);
+    handleClose();
   };
+
 
   return (
     <>
+      { showAlert && <AlertComponent message={message} severity={severity} setShowAlert={setShowAlert} /> }
+
       <Card key={index}
         sx={{
-          maxWidth: 345, backgroundColor: 'transparent', boxShadow: 'none',
+          maxWidth: 345, backgroundColor: 'transparent', boxShadow: 'none', position: 'relative',
           height: '90%', borderRadius: '10px', transition: '0.3s', padding: 2,
           '&:hover': { bgcolor: "rgba(255, 231, 231, 0.06)" }
         }}

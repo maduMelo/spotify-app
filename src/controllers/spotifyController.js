@@ -35,8 +35,12 @@ const spotifyControllers = {
 
         try {
             await spotifyServices.PUTRequest(accessToken, url, JSON.stringify(playlistConfig));
+            return true;
         }
-        catch (error) { console.error('Failed to update playlist information', error) };
+        catch (error) { 
+            console.error('Failed to update playlist information', error);
+            return false;
+        };
     },
 
     unfollowPlaylist: async (accessToken, playlistID) => {
@@ -44,8 +48,12 @@ const spotifyControllers = {
 
         try {
             await spotifyServices.DELETERequest(accessToken, url);
+            return true;
         }
-        catch (error) { console.error('Failed to unfollow playlist', error) };
+        catch (error) { 
+            console.error('Failed to unfollow playlist', error); 
+            return false;
+        };
     },
 
     getMyPlaylists: async (accessToken, userID, offset, limit, savePlaylists, setHasMore) => {
