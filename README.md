@@ -2,6 +2,8 @@
 
 Este projeto é uma aplicação frontend desenvolvida com React que utiliza a API do Spotify para gerenciar playlists. Com esta aplicação, o usuário pode visualizar suas playlists, realizar buscas de músicas para adicionar em suas playlists, criar novas playlists, editar detalhes de playlists existentes e remover follows de playlists seguidas.
 
+https://github.com/user-attachments/assets/5b25d873-1699-4c6b-ad9e-657b6b411f9c
+
 ## Tecnologias Utilizadas
 
 - **React**: Biblioteca principal para construção da interface do usuário.
