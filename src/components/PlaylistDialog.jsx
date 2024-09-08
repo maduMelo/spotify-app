@@ -8,12 +8,17 @@ import AlertComponent from './AlertComponent';
 
 import spotifyControllers from '../controllers/spotifyController';
 
+// Componente utilizado em PlaylistCard
+// Ao ser clicado, abre um modal para edição dos detalhes de uma playlist
+
 
 export default function PlaylistDialog({ open, setOpen, playlistInfo, setPlaylistInfo }) {
+  // Estados para controlar a abertura/fechamento e o conteúdo do alerta de sucesso/erro ao editar playlist
   const [showAlert, setShowAlert] = React.useState(false);
   const [message, setMessage] = React.useState('');
   const [severity, setSeverity] = React.useState('');
 
+  // Estado para armazenar as informações de atualizção da playlist
   const [playlistUpdate, setPlaylistUpdate] = React.useState({
     name: playlistInfo.name,
     description: playlistInfo.description,
@@ -27,6 +32,7 @@ export default function PlaylistDialog({ open, setOpen, playlistInfo, setPlaylis
 
   const handleClose = () => { setOpen(false) };
 
+  // Chama a requisição PUT, atualiza variáveis e abre o alerta de sucesso/erro
   const handleUpdate = async () => {
     if (setPlaylistInfo) {
       setPlaylistInfo(playlistUpdate);

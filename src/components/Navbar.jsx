@@ -9,14 +9,18 @@ import { UserContext } from '../context/userContext';
 import MenuIcon from '@mui/icons-material/Menu';
 import logo from '../assets/logo-sm.png';
 
+// Componente que aparece no topo das páginas depois que o usuário é logado
+// Permite a navegação entre as páginas e o logout do usuário
+
 
 const pages = ['Create Playlist'];
 const settings = ['Logout'];
 
 export default function ResponsiveNavbar() {
-  const navigate = useNavigate();
-  const { user } = React.useContext(UserContext);
+  const navigate = useNavigate(); // hook para realizar a navegação da navbar
+  const { user } = React.useContext(UserContext); // hook para manter as informações do usuário logado na navbar
 
+  // Estados e funções para controlar a abertura e fechamento dos menus de navegação e usuário
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 

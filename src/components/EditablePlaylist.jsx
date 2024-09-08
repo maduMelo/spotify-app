@@ -4,6 +4,10 @@ import MusicNoteIcon from '@mui/icons-material/MusicNote';
 
 import PlaylistDialog from './PlaylistDialog';
 
+// Componente da página "Create playlist"
+// Representa a playlist que o usuário está criando (nome, privacidade e imagem)
+// Ao ser clicado, abre um modal para edição da playlist
+
 
 export default function EditablePlaylist({ playlistInfo, setPlaylistInfo }) {
   const [open, setOpen] = React.useState(false);

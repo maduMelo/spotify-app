@@ -8,19 +8,27 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 
 import spotifyControllers from '../controllers/spotifyController';
 
+// Componente utilizado na página SearchTracks
+// Representa input de busca de músicas e listagem dos resultados implementando o infinitescroll
+// Ao ser clicado, abre um modal para edição da playlist
+
 
 export default function SearchTracks({ setPlaylist }) {
+  // Busca o token  de acesso retornado pelo Spotify
   const accessToken = localStorage.getItem('access_token');
 
+  // Estados para armazenar a query de busca, os resultados e controlar o carregamento infinito
   const [query, setQuery] = React.useState('');
   const [tracks, setTracks] = React.useState([]);
   const [hasMore, setHasMore] = React.useState(false);
   const [offset, setOffset] = React.useState(0);
   const limit = 6;
 
+  // estados para controlar o aparecimento e a mensagem do snackbar informando a adição de uma música à playlist
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
   const [snackbarMessage, setSnackbarMessage] = React.useState('');
 
+  // Chama a requisição GET para buscar as músicas e atualiza os estados de resultados e carregamento infinito
   const fetchTracks = async () => {
     if (!query) return;
     await spotifyControllers.getTracksByQuery(accessToken, query, offset, limit, setTracks, setHasMore);

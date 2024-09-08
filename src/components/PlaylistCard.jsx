@@ -10,16 +10,24 @@ import AlertComponent from './AlertComponent';
 import { UserContext } from '../context/userContext';
 import spotifyControllers from '../controllers/spotifyController';
 
+// Componente utilizado em InfiniteScrollPlaylist e na página FinishedPlaylist
+// Representa o card de uma playlist (imagem, nome e descrição)
+// Ao ser clicado, abre um modal para edição da playlist
+
 
 export default function PlaylistCard({ playlist, index }) {
+  // Busca o token  de acesso retornado pelo Spotify e as informações do usuário salvas no contexto
   const { user } = React.useContext(UserContext);
   const accessToken = localStorage.getItem('access_token');
 
+  // Estados para controlar a abertura/fechamento e o posicionamento do menu de contexto (opção de editar ou remover playlist)
   const [menuPosition, setMenuPosition] = React.useState({ x: 0, y: 0 });
   const [openMenu, setOpenMenu] = React.useState(false);
 
+  // Estado que controla a abertura/fechamento do modal de edição da playlist
   const [openDialog, setOpenDialog] = React.useState(false);
 
+  // Estados para controlar a abertura/fechamento e o conteúdo do alerta de sucesso/erro ao remover ou editar playlist
   const [showAlert, setShowAlert] = React.useState(false);
   const [message, setMessage] = React.useState('');
   const [severity, setSeverity] = React.useState('');

@@ -8,11 +8,16 @@ import PlaylistCard from './PlaylistCard';
 
 import spotifyControllers from '../controllers/spotifyController';
 
+// Componente da página inicial - "Profile"
+// Carrega as playlists do usuário logado (criadas + seguidas) implementando o infinitescroll
+
 
 export default function FeaturedPlaylists() {
+  // Busca o token  de acesso retornado pelo Spotify e as informações do usuário salvas no contexto
   const accessToken = localStorage.getItem('access_token');
   const { user } = React.useContext(UserContext);
 
+  // Estados para armazenar as playlists a serem exibidas e controlar o carregamento infinito
   const [playlists, setPlaylists] = React.useState([]);
   const [hasMore, setHasMore] = React.useState(true);
   const [offset, setOffset] = React.useState(0);
