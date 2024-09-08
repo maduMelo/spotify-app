@@ -1,49 +1,29 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
+import React from 'react';
+import { Box, Container, Typography, Avatar } from '@mui/material';
+import { Button, IconButton, Tooltip } from '@mui/material';
+import { AppBar, Toolbar, Menu, MenuItem } from '@mui/material';
 
-import logo from '../assets/logo.png';
-
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Outlet } from "react-router-dom";
 import { UserContext } from '../context/userContext';
 
-import { Outlet } from 'react-router-dom';
+import MenuIcon from '@mui/icons-material/Menu';
+import logo from '../assets/logo-sm.png';
 
 
 const pages = ['Create Playlist'];
 const settings = ['Logout'];
 
-function ResponsiveAppBar() {
+export default function ResponsiveNavbar() {
   const navigate = useNavigate();
   const { user } = React.useContext(UserContext);
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
+  const handleOpenNavMenu = (event) => { setAnchorElNav(event.currentTarget) };
+  const handleOpenUserMenu = (event) => { setAnchorElUser(event.currentTarget) };
+  const handleCloseNavMenu = () => { setAnchorElNav(null) };
+  const handleCloseUserMenu = () => { setAnchorElUser(null) };
 
   return (
     <>
@@ -51,14 +31,13 @@ function ResponsiveAppBar() {
         <Container maxWidth="xl">
           <Toolbar disableGutters>
 
-          <Button
-            key='logo-md'  color="inherit"
-            onClick={ () => { navigate(`/profile`)} }
-            sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}
-          >
-            <img src={logo} alt="app logo" />
-          </Button>
-
+            <Button
+              key='logo-md' color="inherit"
+              onClick={() => { navigate(`/profile`) }}
+              sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}
+            >
+              <img src={logo} alt="app logo" />
+            </Button>
 
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
               <IconButton
@@ -67,29 +46,20 @@ function ResponsiveAppBar() {
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
                 onClick={handleOpenNavMenu}
-                color="inherit"
               >
                 <MenuIcon />
               </IconButton>
 
               <Menu
-                id="menu-appbar"
+                id="menu-appbar" keepMounted
                 anchorEl={anchorElNav}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'left',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'left',
-                }}
-                open={Boolean(anchorElNav)}
-                onClose={handleCloseNavMenu}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+                transformOrigin={{ vertical: 'top', horizontal: 'left' }}
+                open={Boolean(anchorElNav)} onClose={handleCloseNavMenu}
                 sx={{ display: { xs: 'block', md: 'none' } }}
               >
                 {pages.map((page) => (
-                  <MenuItem key={page} onClick={ () => { navigate(`/${page.toLowerCase().replace(' ', '-')}`)} }>
+                  <MenuItem key={page} onClick={() => { navigate(`/${page.toLowerCase().replace(' ', '-')}`) }}>
                     <Typography sx={{ textAlign: 'center' }}>{page}</Typography>
                   </MenuItem>
                 ))}
@@ -97,19 +67,18 @@ function ResponsiveAppBar() {
             </Box>
 
             <Button
-              key='logo-xs'  color="inherit"
-              onClick={ () => { navigate(`/profile`)} }
+              key='logo-xs' color="inherit"
+              onClick={() => { navigate(`/profile`) }}
               sx={{ display: { xs: 'flex', md: 'none' }, flexGrow: 50 }}
             >
               <img src={logo} alt="app logo" />
             </Button>
-            
 
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               {pages.map((page) => (
                 <Button
-                  key={page}  color="inherit"
-                  onClick={ () => { navigate(`/${page.toLowerCase().replace(' ', '-')}`)} }
+                  key={page} color="inherit"
+                  onClick={() => { navigate(`/${page.toLowerCase().replace(' ', '-')}`) }}
                   sx={{ textTransform: 'none' }}
                 >
                   {page}
@@ -120,9 +89,9 @@ function ResponsiveAppBar() {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title={user && user.display_name}>
                 <IconButton onClick={handleOpenUserMenu}
-                  sx={{ 
+                  sx={{
                     p: 1, m: 1, bgcolor: 'rgba(255, 231, 231, 0.06)', transition: 'all 0.1s ease',
-                    '&:hover': {bgcolor: 'rgba(255, 231, 231, 0.06)', transform: 'scale(1.05)'} 
+                    '&:hover': { bgcolor: 'rgba(255, 231, 231, 0.06)', transform: 'scale(1.05)' }
                   }}
                 >
                   <Avatar alt={user && user.display_name} src={user && user.images[0].url} />
@@ -131,19 +100,11 @@ function ResponsiveAppBar() {
 
               <Menu
                 sx={{ mt: '45px' }}
-                id="menu-appbar"
+                id="menu-appbar" keepMounted
                 anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
+                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                open={Boolean(anchorElUser)} onClose={handleCloseUserMenu}
               >
                 {settings.map((setting) => (
                   <MenuItem key={setting} onClick={handleCloseUserMenu}>
@@ -156,9 +117,8 @@ function ResponsiveAppBar() {
           </Toolbar>
         </Container>
       </AppBar>
-      
+
       <Outlet />
     </>
   );
-}
-export default ResponsiveAppBar;
+};

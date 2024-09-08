@@ -1,7 +1,9 @@
 import React from 'react';
-import { Box, Button, IconButton, InputBase, List, ListItem, ListItemAvatar, ListItemText, Avatar } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
+import { Box, Button, IconButton, InputBase, Avatar } from '@mui/material';
+import { List, ListItem, ListItemAvatar, ListItemText } from '@mui/material';
 import { CircularProgress, Snackbar } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 import spotifyControllers from '../controllers/spotifyController';
@@ -14,7 +16,7 @@ export default function SearchTracks({ setPlaylist }) {
   const [tracks, setTracks] = React.useState([]);
   const [hasMore, setHasMore] = React.useState(false);
   const [offset, setOffset] = React.useState(0);
-  const limit = 5;
+  const limit = 6;
 
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
   const [snackbarMessage, setSnackbarMessage] = React.useState('');
@@ -32,7 +34,7 @@ export default function SearchTracks({ setPlaylist }) {
     fetchTracks();
   };
 
-  const handleCloseSnackbar = (event, reason) => {reason === 'clickaway' ? null : setOpenSnackbar(false)};
+  const handleCloseSnackbar = (event, reason) => { reason === 'clickaway' ? null : setOpenSnackbar(false) };
 
   const addTrackOnPlaylist = (event) => {
     setPlaylist((prevPlaylist) => [...prevPlaylist, event.target.id]);
@@ -58,17 +60,17 @@ export default function SearchTracks({ setPlaylist }) {
       </Box>
 
       <InfiniteScroll
-          dataLength={tracks.length}
-          next={fetchTracks}
-          hasMore={hasMore}
-          loader={<CircularProgress sx={{ p: 0, m: 2, color: '#1FDF64' }}/>}
+        dataLength={tracks.length}
+        next={fetchTracks}
+        hasMore={hasMore}
+        loader={<CircularProgress sx={{ p: 0, m: 2, color: '#1FDF64' }} />}
       >
 
         <List sx={{ mt: 2 }}>
           {tracks.map((track, index) => (
             <ListItem key={index}
               sx={{
-                bgcolor: '#181818', borderRadius: '8px', mb: 1,
+                bgcolor: '#181818', borderRadius: '8px', mb: 0, paddingBlock: 0, paddingInline: 1,
                 '&:hover': { bgcolor: 'rgba(255, 231, 231, 0.06)' }
               }}
             >
@@ -76,7 +78,10 @@ export default function SearchTracks({ setPlaylist }) {
                 <Avatar src={track.album.images[2].url} variant="square" sx={{ borderRadius: 1 }} />
               </ListItemAvatar>
 
-              <ListItemText primary={track.name} secondary={track.artists[0].name} />
+              <ListItemText 
+                primary={track.name}
+                secondary={track.artists[0].name} secondaryTypographyProps={{ sx: { color: '#C7C7C7' } }}
+              />
 
               <Button variant="outlined" id={track.id} name={track.name}
                 onClick={addTrackOnPlaylist}

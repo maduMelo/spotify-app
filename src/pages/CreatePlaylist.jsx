@@ -3,50 +3,49 @@ import { Container, Button, Box } from '@mui/material';
 import { UserContext } from '../context/userContext';
 import { useNavigate } from 'react-router-dom';
 
-import spotifyControllers from '../controllers/spotifyController';
-
 import SearchTracks from '../components/SearchTracks';
 import EditablePlaylist from '../components/EditablePlaylist';
 
+import spotifyControllers from '../controllers/spotifyController';
+
 
 export default function CreatePlaylist() {
-    const navigate = useNavigate();
-    const accessToken = localStorage.getItem('access_token');
-    const { user } = React.useContext(UserContext);
-    
-    const [playlist, setPlaylist] = React.useState([]);
-    const [body, setBody] = React.useState({
-        name: 'My Playlist',
-        description: 'Playlist created by Playlist Maker',
-        public: true
-    });
+  const navigate = useNavigate();
+  const accessToken = localStorage.getItem('access_token');
+  const { user } = React.useContext(UserContext);
 
-    const handleCreatePlaylist = async () => {
-        const playlistID = await spotifyControllers.createPlaylist(accessToken, user.id, body);
-        const tracksID = playlist.map(track => `spotify:track:${track}`);
-        await spotifyControllers.addTracksOnPlaylist(accessToken, playlistID, tracksID);
+  const [playlist, setPlaylist] = React.useState([]);
+  const [body, setBody] = React.useState({
+    name: 'My Playlist',
+    description: 'Playlist created by Playlist Maker',
+    public: true
+  });
 
-        navigate('/finished-playlist', { state: {...body, id: playlistID, owner: { id: user.id }} });
-    };
+  const handleCreatePlaylist = async () => {
+    const playlistID = await spotifyControllers.createPlaylist(accessToken, user.id, body);
+    const tracksID = playlist.map(track => `spotify:track:${track}`);
+    await spotifyControllers.addTracksOnPlaylist(accessToken, playlistID, tracksID);
 
-    return (
-        <Container maxWidth="lg" sx={{ pt: 4 }}>
+    navigate('/finished-playlist', { state: { ...body, id: playlistID, owner: { id: user.id } } });
+  };
 
-            <Box sx={{ display: 'flex', alignItems: 'start', justifyContent: 'space-between', width: '97%' }}>
-                <EditablePlaylist playlistInfo={body} setPlaylistInfo={setBody} />
+  return (
+    <Container maxWidth="lg" sx={{ pt: 4 }}>
+      <Box sx={{ display: 'flex', alignItems: 'start', justifyContent: 'space-between', width: '97%' }}>
+        <EditablePlaylist playlistInfo={body} setPlaylistInfo={setBody} />
 
-                <Button variant="contained" onClick={handleCreatePlaylist}
-                    sx={{ 
-                        textTransform: 'none', bgcolor: '#1FDF64', color: 'black', fontWeight: 'bold',
-                        padding: '10px 35px', borderRadius: '50px', fontSize: 15,
-                        '&:hover': { transform: 'scale(1.03)', transition: '0.1s' }
-                    }}
-                >
-                    Create Playlist
-                </Button>
-            </Box>
+        <Button variant="contained" onClick={handleCreatePlaylist}
+          sx={{
+            textTransform: 'none', bgcolor: '#1FDF64', color: 'black', fontWeight: 'bold',
+            padding: '10px 35px', borderRadius: '50px', fontSize: 15,
+            '&:hover': { transform: 'scale(1.03)', transition: '0.1s' }
+          }}
+        >
+          Create Playlist
+        </Button>
+      </Box>
 
-            <SearchTracks setPlaylist={setPlaylist} />
-        </Container>
-    )
+      <SearchTracks setPlaylist={setPlaylist} />
+    </Container>
+  )
 };

@@ -1,23 +1,22 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import authControllers from '../controllers/authController';
 
-function Callback() {
-    const navigate = useNavigate();
 
-    useEffect(() => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const code = urlParams.get('code');
+export default function Callback() {
+  const navigate = useNavigate();
 
-        if (code) authControllers.handleAuthorizationCallback(code, navigate);
-        else console.error('Authorization code not found in URL');
+  React.useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('code');
 
-    }, [navigate]);
+    if (code) authControllers.handleAuthorizationCallback(code, navigate);
+    else console.error('Authorization code not found in URL');
 
-    return (
-        <div>Processing authorization...</div>
-    );
+  }, [navigate]);
+
+  return (
+    <div>Processing authorization...</div>
+  );
 };
-
-export default Callback;

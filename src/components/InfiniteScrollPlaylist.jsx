@@ -1,36 +1,30 @@
-import React, { useState, useEffect } from 'react';
-import InfiniteScroll from 'react-infinite-scroll-component';
-import { Typography, CircularProgress, Skeleton } from '@mui/material';
-import { Box } from '@mui/material';
+import React from 'react';
+import { Box, Typography, CircularProgress, Skeleton } from '@mui/material';
 import Grid from '@mui/material/Grid2';
-
-import spotifyControllers from '../controllers/spotifyController';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { UserContext } from '../context/userContext';
+
 import PlaylistCard from './PlaylistCard';
 
-const FeaturedPlaylists = () => {
+import spotifyControllers from '../controllers/spotifyController';
+
+
+export default function FeaturedPlaylists() {
   const accessToken = localStorage.getItem('access_token');
   const { user } = React.useContext(UserContext);
 
-  const [playlists, setPlaylists] = useState([]);
-  const [hasMore, setHasMore] = useState(true);
-  const [offset, setOffset] = useState(3);
+  const [playlists, setPlaylists] = React.useState([]);
+  const [hasMore, setHasMore] = React.useState(true);
+  const [offset, setOffset] = React.useState(0);
   const limit = 8;
 
   const fetchPlaylists = async () => {
-    if (user) {
-      spotifyControllers.getMyPlaylists(accessToken, user.id, offset, limit, setPlaylists, setHasMore);
-    };
-
+    if (user) spotifyControllers.getMyPlaylists(accessToken, user.id, offset, limit, setPlaylists, setHasMore);
   };
 
-  useEffect(() => {
-    fetchPlaylists();
-  }, [offset, user]);
+  const loadMorePlaylists = () => { if (hasMore) setOffset(prevOffset => prevOffset + limit) };
 
-  const loadMorePlaylists = () => {
-    if (hasMore) setOffset(prevOffset => prevOffset + limit);
-  };
+  React.useEffect(() => { fetchPlaylists() }, [offset, user]);
 
   return (
     <InfiniteScroll
@@ -38,7 +32,6 @@ const FeaturedPlaylists = () => {
       next={loadMorePlaylists}
       hasMore={hasMore}
       loader={<CircularProgress sx={{ p: 0, m: 2, color: '#1FDF64' }} />}
-      endMessage={<Typography variant="h6">No more playlists</Typography>}
     >
       {
         playlists.length > 0 ? (
@@ -73,9 +66,6 @@ const FeaturedPlaylists = () => {
           </Box>
         )
       }
-
     </InfiniteScroll>
   );
 };
-
-export default FeaturedPlaylists;
